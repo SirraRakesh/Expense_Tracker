@@ -159,10 +159,8 @@ function Createexpense() {
                   type="number"
                   placeholder="Cost"
                   className="form-control"
-                  value={cost}
-                  onChange={(e) =>
-                    setCost(e.target.value ? parseInt(e.target.value) : 0)
-                  }
+                  // value={cost}
+                  onChange={(e) => setCost(parseInt(e.target.value))}
                 />
               </div>
             </div>
