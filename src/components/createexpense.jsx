@@ -3,7 +3,7 @@ import moment from "moment";
 import "./expensestyles.css";
 import { useData } from "./datacontext";
 import Incomechart from "./incomechart";
-import Expensechart from "./expensechart";
+import { Expensechart, ExpenseData } from "./expensechart";
 
 function Createexpense() {
   const [type, setType] = useState("");
@@ -81,8 +81,10 @@ function Createexpense() {
       >
         {/* *******income Tracker ************* */}
         <div className="d-flex flex-column col-md-4  ms-2">
-          <div>
-            <h3 className="text-center mt-5 mx-auto">Income tracker</h3>
+          <div className="mt-2">
+            <h3 className="text-center mt-5 mx-auto text-light p-1 my-2 rounded bg-primary">
+              Income tracker
+            </h3>
           </div>
           <div>
             <Incomechart />
@@ -91,12 +93,22 @@ function Createexpense() {
         {/* *******income Tracker end ************* */}
 
         <div
-          className="col-md-3 border px-3 mt-5 "
-          style={{ minHeight: "50vh" }}
+          className="col-md-3 border  mt-5 fluid-container "
+          style={{
+            backgroundColor: "beige",
+            minHeight: "50vh",
+            borderRadius: "10px",
+          }}
         >
-          <form onSubmit={handleSubmit}>
-            <h3 className="text-center">Expense tracker</h3>
-            <h3 className="text-center">
+          <form onSubmit={handleSubmit} className="" style={{}}>
+            {" "}
+            <h3
+              className="text-center text-light p-1 my-2 rounded bg-primary
+            "
+            >
+              Expense tracker
+            </h3>
+            <h3 className="text-center mt-3">
               Total balance:{" "}
               <span
                 style={{
@@ -106,7 +118,7 @@ function Createexpense() {
                 {totalincome - totalexpense}
               </span>
             </h3>
-            <div className="mt-5 row">
+            <div className="mt-3 row">
               <div className="col-6">
                 <select
                   className="form-select"
@@ -141,7 +153,6 @@ function Createexpense() {
                 </select>
               </div>
             </div>
-
             <div className="mt-3 row">
               <div className="col-6">
                 <input
@@ -240,8 +251,10 @@ function Createexpense() {
 
         {/* *******expense Tracker************* */}
         <div className="d-flex flex-column col-md-4  ms-2 mt-5 ">
-          <div>
-            <h3 className="text-center mx-auto">Expense tracker</h3>
+          <div className="mt-1">
+            <h3 className="text-center mx-auto text-light p-1 my-2 rounded bg-primary">
+              Expense tracker
+            </h3>
           </div>
           <div>
             <Expensechart />
@@ -249,6 +262,8 @@ function Createexpense() {
         </div>
         {/* *******expense Tracker end ************* */}
       </div>
+      {/* <div className="">Your highest spending is on {}</div>
+      <ExpenseData></ExpenseData> */}
     </>
   );
 }

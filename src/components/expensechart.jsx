@@ -3,6 +3,7 @@ import { Chart as ChartJs, Legend, Tooltip, ArcElement } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { useData } from "./datacontext";
 ChartJs.register(ArcElement, Legend, Tooltip);
+var expense_list;
 function Expensechart() {
   const [data, setData] = useData();
   const expensecategory = [
@@ -14,7 +15,7 @@ function Expensechart() {
     "food",
     "business Investments",
   ];
-  const expense_list = expensecategory?.map((ele, idx) => {
+  expense_list = expensecategory?.map((ele, idx) => {
     return data.reduce((acc, item) => {
       return item.type === "expense" && item.category === ele
         ? acc + item.money
@@ -53,4 +54,8 @@ function Expensechart() {
   );
 }
 
-export default Expensechart;
+function ExpenseData() {
+  return <div>expensechart ${expense_list}</div>;
+}
+
+export { Expensechart, ExpenseData };
