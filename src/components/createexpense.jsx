@@ -65,12 +65,30 @@ function Createexpense() {
   };
 
   const handleDelete = (index) => {
-    const updatedData = [...data];
-    updatedData.splice(index, 1);
-    setData(updatedData);
-    localStorage.setItem("data", JSON.stringify(updatedData));
+    var deleteConfirmed = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+    if (deleteConfirmed) {
+      const updatedData = [...data];
+      updatedData.splice(index, 1);
+      setData(updatedData);
+      localStorage.setItem("data", JSON.stringify(updatedData));
+    }
   };
-
+  const HandleReset = () => {
+    const confirm = window.confirm(
+      "Are you sure wanted to clear your all income and expense data "
+    );
+    if (confirm) {
+      const confirm = window.confirm(
+        "Reset means all your income and expense data will erase and starts from new, Are you Ok with that?  "
+      );
+      if (confirm) {
+        setData([]);
+        localStorage.setItem("data", JSON.stringify(data));
+      }
+    }
+  };
   const categoryOptions = type === "expense" ? expensecategory : incomecategory;
 
   return (
@@ -79,18 +97,21 @@ function Createexpense() {
         className="row"
         // style={{ marginTop: "60px" }}
       >
-        {/* *******income Tracker ************* */}
-        <div className="d-flex flex-column col-md-4  ms-2">
-          <div className="mt-2">
-            <h3 className="text-center mt-5 mx-auto text-light p-1 my-2 rounded bg-primary">
-              Income tracker
+        {/* *******expense Tracker************* */}
+        <div className="d-flex flex-column col-md-4  ms-2 mt-md-5 ">
+          <div className="mt-1">
+            <h3 className="text-center mx-auto text-light p-1 my-2 rounded bg-primary">
+              Expense Chart
             </h3>
           </div>
+          <div className="d-flex" style={{ backgroundColor: "beige" }}>
+            <h6 className="mx-auto">Total Expenses:{totalexpense}</h6>
+          </div>
           <div>
-            <Incomechart />
+            <Expensechart />
           </div>
         </div>
-        {/* *******income Tracker end ************* */}
+        {/* *******expense Tracker end ************* */}
 
         <div
           className="col-md-3 border  mt-5 fluid-container "
@@ -103,7 +124,8 @@ function Createexpense() {
           <form onSubmit={handleSubmit} className="" style={{}}>
             {" "}
             <h3
-              className="text-center text-light p-1 my-2 rounded bg-primary
+              // id="blink"
+              className="text-light  text-center  p-1 my-2 rounded bg-primary 
             "
             >
               Expense tracker
@@ -114,10 +136,42 @@ function Createexpense() {
                 style={{
                   color: totalincome - totalexpense > 0 ? "green" : "red",
                 }}
+                className={
+                  totalincome - totalexpense < 0 ? " blink" : "noblink"
+                }
               >
                 {totalincome - totalexpense}
               </span>
             </h3>
+            <div className="d-flex">
+              <small
+                style={{
+                  display:
+                    totalincome - totalexpense < 0 && data.length > 0
+                      ? "block"
+                      : "none",
+                }}
+                className="mx-auto text-center text-danger blink"
+              >
+                you are running out of your money
+              </small>
+            </div>
+            <div className="d-flex">
+              {console.log(totalincome, totalexpense)}
+              <small
+                style={{
+                  display:
+                    totalincome - totalexpense < totalincome * 0.1 &&
+                    totalincome - totalexpense > 0
+                      ? "block"
+                      : "none",
+                }}
+                className="mx-auto text-center text-warning blink"
+              >
+                your balance is lessthan 10% of your income<br></br>
+                your total income is {totalincome}
+              </small>
+            </div>
             <div className="mt-3 row">
               <div className="col-6">
                 <select
@@ -176,7 +230,11 @@ function Createexpense() {
               </div>
             </div>
             <div className="d-flex mt-3">
-              <button type="submit" className="mx-auto px-3">
+              <button
+                type="submit"
+                className="mx-auto px-3 bg-primary rounded h6 py-1 text-light
+                "
+              >
                 Create
               </button>
             </div>
@@ -189,12 +247,13 @@ function Createexpense() {
                   <th>Category</th>
                   <th>Money</th>
                   <th style={{ minWidth: "150px" }}>Time</th>
-                  <th></th>
+                  <th>Edit</th>
                 </tr>
               </thead>
               <tbody>
                 {data?.map((ele, idx) => {
-                  const time = moment(ele.date, "M/D/YYYY, h:mm:ss A");
+                  const date = new Date(Date.now());
+                  // console.log(date.toLocaleString());
                   return (
                     ele.type && (
                       <tr key={idx}>
@@ -230,7 +289,9 @@ function Createexpense() {
                           {ele.money}
                         </td>
                         <td>
-                          <small>{time.fromNow()}</small>
+                          {/* <small>{time}</small> */}
+
+                          <small>{date.toLocaleString()}</small>
                         </td>
                         <td>
                           <div
@@ -247,23 +308,99 @@ function Createexpense() {
               </tbody>
             </table>
           </div>
+          <div className="py-3">
+            <button
+              className=" m-1  bg-warning container rounded "
+              onClick={HandleReset}
+            >
+              <h4>Reset</h4>
+            </button>
+          </div>
         </div>
 
-        {/* *******expense Tracker************* */}
-        <div className="d-flex flex-column col-md-4  ms-2 mt-5 ">
-          <div className="mt-1">
-            <h3 className="text-center mx-auto text-light p-1 my-2 rounded bg-primary">
-              Expense tracker
+        {/* *******income Tracker ************* */}
+        <div className="d-flex flex-column col-md-4  ms-2">
+          <div className="mt-2">
+            <h3 className="text-center mt-md-5 mx-auto text-light p-1 my-2 rounded bg-primary">
+              Income Chart
             </h3>
           </div>
+          <div className="d-flex" style={{ backgroundColor: "beige" }}>
+            <h6 className="mx-auto pt-2">Total Income:{totalincome}</h6>
+          </div>
           <div>
-            <Expensechart />
+            <Incomechart />
           </div>
         </div>
-        {/* *******expense Tracker end ************* */}
+        {/* *******income Tracker end ************* */}
       </div>
+      <hr></hr>
+
       {/* <div className="">Your highest spending is on {}</div>
       <ExpenseData></ExpenseData> */}
+      <div>
+        <div style={{ maxHeight: "500px", overflowY: "scroll" }}>
+          <table className="table my-table responsive">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Money</th>
+                <th style={{ minWidth: "150px" }}>Time</th>
+                <th>Product</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {data?.map((ele, idx) => {
+                const date = new Date(Date.now());
+                // console.log(date.toLocaleString());
+                return (
+                  ele.type && (
+                    <tr key={idx}>
+                      <td
+                        style={{
+                          color: ele.type === "income" ? "green" : "red",
+                        }}
+                      >
+                        {ele.type}
+                      </td>
+                      <td>{ele.category}</td>
+                      <td
+                        style={{
+                          color: ele.type === "income" ? "green" : "red",
+                        }}
+                      >
+                        <span
+                          style={{
+                            display: ele.type === "income" ? "inline" : "none",
+                          }}
+                        >
+                          +
+                        </span>
+                        <span
+                          style={{
+                            display: ele.type === "income" ? "none" : "inline",
+                          }}
+                        >
+                          -
+                        </span>
+                        {ele.money}
+                      </td>
+                      <td>
+                        {/* <small>{time}</small> */}
+
+                        <small>{date.toLocaleString()}</small>
+                      </td>
+                      <td>{ele.product}</td>
+                    </tr>
+                  )
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </>
   );
 }
