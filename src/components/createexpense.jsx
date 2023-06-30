@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import moment from "moment";
+
 import "./expensestyles.css";
 import { useData } from "./datacontext";
 import Incomechart from "./incomechart";
 import { Expensechart, ExpenseData } from "./expensechart";
+import useSound from "use-sound";
+import notification from "./Notification.mp3";
 
 function Createexpense() {
   const [type, setType] = useState("");
   const [category, setCategory] = useState("");
   const [cost, setCost] = useState(0);
   const [name, setName] = useState("");
+  const [play, { stop }] = useSound(notification);
 
   const [data, setData] = useData();
   const date = new Date();
@@ -60,6 +63,7 @@ function Createexpense() {
       product: name,
       date: date.toLocaleString(),
     };
+    play();
     setData([newExpense, ...data]);
     localStorage.setItem("data", JSON.stringify([newExpense, ...data]));
   };
