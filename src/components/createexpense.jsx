@@ -6,6 +6,7 @@ import Incomechart from "./incomechart";
 import { Expensechart, ExpenseData } from "./expensechart";
 import useSound from "use-sound";
 import notification from "./Notification.mp3";
+import toast, { Toaster } from "react-hot-toast";
 
 function Createexpense() {
   const [type, setType] = useState("");
@@ -64,6 +65,7 @@ function Createexpense() {
       date: date.toLocaleString(),
     };
     play();
+    toast.success("succesfully added");
     setData([newExpense, ...data]);
     localStorage.setItem("data", JSON.stringify([newExpense, ...data]));
   };
@@ -76,6 +78,7 @@ function Createexpense() {
       const updatedData = [...data];
       updatedData.splice(index, 1);
       setData(updatedData);
+      toast.success("Succesfully deleted");
       localStorage.setItem("data", JSON.stringify(updatedData));
     }
   };
@@ -243,6 +246,7 @@ function Createexpense() {
               </button>
             </div>
           </form>
+
           <div style={{ maxHeight: "200px", overflowY: "scroll" }}>
             <table className="table my-table responsive">
               <thead>
@@ -405,6 +409,7 @@ function Createexpense() {
           </table>
         </div>
       </div>
+      <Toaster></Toaster>
     </>
   );
 }
