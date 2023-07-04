@@ -151,7 +151,7 @@ function Createexpense() {
               </span>
             </h3>
             <div className="d-flex">
-              <small
+              <strong
                 style={{
                   display:
                     totalincome - totalexpense < 0 && data.length > 0
@@ -161,23 +161,24 @@ function Createexpense() {
                 className="mx-auto text-center text-danger blink"
               >
                 you are running out of your money
-              </small>
+              </strong>
             </div>
             <div className="d-flex">
               {console.log(totalincome, totalexpense)}
-              <small
+              <strong
                 style={{
+                  color: "red",
                   display:
                     totalincome - totalexpense < totalincome * 0.1 &&
                     totalincome - totalexpense > 0
                       ? "block"
                       : "none",
                 }}
-                className="mx-auto text-center text-warning blink"
+                className="mx-auto text-center  blink"
               >
                 your balance is lessthan 10% of your income<br></br>
-                your total income is {totalincome}
-              </small>
+                {/* your total income is {totalincome} */}
+              </strong>
             </div>
             <div className="mt-3 row">
               <div className="col-6">
