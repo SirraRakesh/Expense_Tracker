@@ -231,6 +231,7 @@ function Createexpense() {
                 <input
                   id="item"
                   type="number"
+                  required
                   placeholder="Cost"
                   className="form-control"
                   // value={cost}
