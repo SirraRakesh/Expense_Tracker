@@ -302,7 +302,7 @@ function Createexpense() {
                         <td>
                           {/* <small>{time}</small> */}
 
-                          <small>{date.toLocaleString()}</small>
+                          <small>{ele.date}</small>
                         </td>
                         <td>
                           <div
@@ -364,8 +364,8 @@ function Createexpense() {
             </thead>
             <tbody>
               {data?.map((ele, idx) => {
-                const date = new Date(Date.now());
-                // console.log(date.toLocaleString());
+                // const date = new Date(Date.now());
+                // console.log(data);
                 return (
                   ele.type && (
                     <tr key={idx}>
@@ -401,7 +401,7 @@ function Createexpense() {
                       <td>
                         {/* <small>{time}</small> */}
 
-                        <small>{date.toLocaleString()}</small>
+                        <small>{ele.date}</small>
                       </td>
                       <td>{ele.product}</td>
                     </tr>
